@@ -62,8 +62,25 @@ function fnChoose(e) {
             targetElement.innerHTML = charArray[i];
             json.game["row" + row]["col" + col]["dice"].charCode = charArray[i];
 
-            
+            //TODO Use Shift click to be able to change the color of dices. Example code below.
+            //Shift = Loop backwards
+            //Ctrl = Change color
+            //Alt = ????
+            //Shift+Ctrl = Loop colors backwards
 
+            /*
+            $(selector).click(function(e) {
+              if(e.shiftKey) {
+                //Shift-Click
+              }
+              if(e.ctrlKey) {
+                //Ctrl+Click
+              }
+              if(e.altKey) {
+                //Alt+Click
+              }
+            });
+            */
 
 
             turn = turn === "&#9856" ? "&#9857" : "&#9856";
