@@ -7,28 +7,25 @@ var json = {
 
 var turn = "&#9856";
 
-var charArray = ["&#9856",
+var charArray = [
+                "",
+                "&#9856",
                 "&#9857",
                 "&#9858",
                 "&#9859",
                 "&#9860",
-                "&#9861",
-                "&#9862"]
+                "&#9861",]
 
 var gridValue = 0;
 
-function defaultDice(){
-  return dice("Normal", 1, 1, "#FFF", "&#9856") 
-}
-
-
-function createDefaultJsonDice(){
+function createDefaultJsonDice(id){
   var dice = {
-    type: "normal",
-    numValue: 1,
-    numberOfMarks: 1,
-    color: "#FFF",
-    charCode: "&#9856"
+                type: "normal",
+                numValue: 1,
+                numberOfMarks: 1,
+                color: "#FFF",
+                charCode: "",
+                id: id
   }
   return dice;
 }
@@ -51,16 +48,27 @@ function addEvent(element, eventName, callback) {
 function fnChoose(e) {
     if (e.target && e.target.nodeName == "TD") {
         var targetElement = document.getElementById(e.target.id);
-        var prevTurn;
-        if ((targetElement.className).indexOf("disabled") == -1) {
-            targetElement.innerHTML = turn;
-            targetElement.classList.add('disabled');
-            targetElement.classList.add(turn);
+        var id = targetElement.id;
+        id = id.slice(2);
+        var col = (id-1) % json.meta.size +1;
+        var row = (id - col) / json.meta.size + 1;
 
-            prevTurn = turn;
+            console.log(id);
+            console.log(col);
+            console.log(row);
+            
+            var currentCharCode = json.game["row" + row]["col" + col]["dice"].charCode;
+            var i = (charArray.indexOf(currentCharCode)+1) % charArray.length;
+            targetElement.innerHTML = charArray[i];
+            json.game["row" + row]["col" + col]["dice"].charCode = charArray[i];
+
+            
+
+
+
             turn = turn === "&#9856" ? "&#9857" : "&#9856";
 
-        }
+        
     }
 }
 
@@ -98,9 +106,10 @@ function fnNewGame() {
         for (j = 1; j <= gridValue; j += 1) {
             k += 1;
             json.game["row" + i]["col" + j] ={}; // Add table cell 
-            json.game["row" + i]["col" + j]["dice"] = createDefaultJsonDice(); //Add default dice
+            json.game["row" + i]["col" + j]["dice"] = createDefaultJsonDice((i-1)*json.meta.size + j); //Add default dice with id
             li = document.createElement('td'); //Create new cell
             li.setAttribute("id", 'li' + k); // Set attribute id=lik
+            li.innerHTML = json.game["row" + i]["col" + j]["dice"].charCode;
 
             classLists = 'td row' + i + ' col' + j; //Set attribute td and rowi and colj
 
@@ -117,6 +126,7 @@ function fnNewGame() {
 
             li.className = classLists;
             tr.appendChild(li);
+           
 
 
         }
