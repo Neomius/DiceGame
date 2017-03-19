@@ -21,15 +21,6 @@ var defaultGameData = {
 };
 
 var gameData = {};
-var charArray = [
-  "",
-  "&#9856",
-  "&#9857",
-  "&#9858",
-  "&#9859",
-  "&#9860",
-  "&#9861",]
-
 var gridValue = 0;
 
 
@@ -78,9 +69,9 @@ function fnChoose(e) {
         //TODO Add handeling of change of dice color
     } else {
       var currentCharCode = gameData.game["row" + row]["col" + col]["dice"].charCode;
-      var i = (charArray.indexOf(currentCharCode) + modifier + charArray.length) % charArray.length;
-      targetElement.innerHTML = charArray[i];
-      gameData.game["row" + row]["col" + col]["dice"].charCode = charArray[i];
+      var i = (gameData.meta.validDices.indexOf(currentCharCode) + modifier + gameData.meta.validDices.length) % gameData.meta.validDices.length;
+      targetElement.innerHTML = gameData.meta.validDices[i];
+      gameData.game["row" + row]["col" + col]["dice"].charCode = gameData.meta.validDices[i];
     }
   }
 }
@@ -89,7 +80,7 @@ function fnChoose(e) {
 function fnNewGame() {
   var gameUL = document.getElementById("game");
 
-  //Reset eventual running game by clearing game HTML
+  //Reset potential running game by clearing game HTML and resteting GameData
   if (gameUL.innerHTML !== '') {
     gameUL.innerHTML = null;
     gridValue = 0;
