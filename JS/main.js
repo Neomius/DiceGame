@@ -12,25 +12,22 @@ var defaultGameData = {
       "&#9861"],
 
     validColors:
-    ["",
-      "#FFF",
-      "#F00",
-      "#0F0",
-      "#00F",]
+    ["#FFFFFF",
+      "#CC0000",
+      "#00CC00",
+      "#0000CC"]
   }
-};
+}
 
 var gameData = {};
 var gridValue = 0;
-
-
 
 function createDefaultJsonDice(id) {
   var dice = {
     type: "normal",
     numValue: 0,
     numberOfMarks: 0,
-    color: "#FFF",
+    color: "#FFFFFF",
     charCode: "",
     id: id
   }
@@ -66,7 +63,10 @@ function fnChoose(e) {
     var modifier = (e.shiftKey === true) ? -1 : 1;
 
     if (e.ctrlKey) {
-        //TODO Add handeling of change of dice color
+        var currentColor = gameData.game["row" + row]["col" + col]["dice"].color;
+        var colorIndex = (gameData.meta.validColors.indexOf(currentColor) + modifier + gameData.meta.validColors.length) % gameData.meta.validColors.length;
+        targetElement.style.backgroundColor = gameData.meta.validColors[colorIndex];
+        gameData.game["row" + row]["col" + col]["dice"].color = gameData.meta.validColors[colorIndex];
     } else {
       var currentCharCode = gameData.game["row" + row]["col" + col]["dice"].charCode;
       var i = (gameData.meta.validDices.indexOf(currentCharCode) + modifier + gameData.meta.validDices.length) % gameData.meta.validDices.length;
