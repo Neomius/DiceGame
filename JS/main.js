@@ -79,6 +79,7 @@ function fnChoose(e) {
 //Generate new game
 function fnNewGame() {
   var gameUL = document.getElementById("game");
+  var answer = document.getElementById("answer");
 
   //Reset potential running game by clearing game HTML and resteting GameData
   if (gameUL.innerHTML !== '') {
@@ -115,9 +116,50 @@ function fnNewGame() {
     }
     gameUL.appendChild(tr);
     console.log(gameData);
+
+    //answer.innerHTML = updateAnswer();
   }
 }
+/*
+function updateAnswer(){
+  var answer = 0;
+  for (var i = 0; i < gameData.meta.size; i++){
+    for (var j = 0; i < gameData.meta.size; i++){
+      answer = answer + diceValue(gameData.game["row" + i]["col" + j]["dice"].charCode);
+    }
+  }
+  return answer;
+}
 
+function diceValue(charCode){
+switch(charCode) {
+    case "":
+        return 0;
+        break;
+    case "&#9856":
+        return 1;
+        break;
+    case "&#9857":
+        return 2;
+        break;
+    case "&#9858":
+        return 3;
+        break;
+    case "&#9859":
+        return 4;
+        break;
+    case "&#9860":
+        return 5;
+        break;
+    case "&#9861":
+        return 6;
+        break;
+    default:
+        return 0;
+  }
+
+}
+  */
 
 
 
